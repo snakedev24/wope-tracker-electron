@@ -1,11 +1,22 @@
 {
   "compilerOptions": {
     "target": "es5",
+    "sourceMap": true,
+    "paths": {
+      "@/*": ["./*"]
+    },
     "lib": [
       "dom",
       "dom.iterable",
       "esnext"
     ],
+    "noImplicitAny": false, // Allow implicit 'any' type
+    "strictNullChecks": false, // Disable strict null checks
+    "strictFunctionTypes": false, // Disable strict checking of function types
+    "strictBindCallApply": false, // Disable strict checking of 'bind', 'call', and 'apply'
+    "strictPropertyInitialization": false, // Disable strict property initialization checks
+    "noImplicitThis": false, // Allow implicit 'this' type
+    "alwaysStrict": false, // Do not emit 'use strict' directive
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,

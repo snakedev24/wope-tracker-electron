@@ -1,0 +1,224 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  background-color: white;
+  font-family: "Poppins", sans-serif;
+}
+.login-box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  max-width: 400px;
+  padding: 40px;
+  transform: translate(-50%, -50%);
+  background-color: rgb(255 255 255);
+  box-shadow: 1px 0px 3px 3px #eadddd;
+  border-radius: 12px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  height: max-content;
+}
+.user-box label {
+  font-size: 13px;
+  color: rgb(78, 77, 77);
+}
+.log{
+  width: 100%;
+}
+.input-design {
+  border: 2px solid #bdafaf;
+  width: 100%;
+  border-radius: 20px;
+  height: 35px;
+  padding: 16px;
+}
+.user-box input::placeholder { 
+  opacity: 40%; 
+}
+.user-box > input[type="text"]:focus {
+  outline: none;
+  border: 1px solid #bdafaf;
+}
+.user-box > input[type="password"]:focus {
+  outline: none;
+  border: 1px solid #bdafaf;
+}
+form {
+  line-height: 30px;
+  margin-top: 18px;
+}
+.form-h {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  line-height: 43px;
+  margin-bottom: 4px;
+}
+
+.form-h span:nth-child(1) {
+  color: green;
+  font-size: 22px;
+}
+
+.form-h span:nth-child(2) {
+  font-size: 4vmin;
+  font-weight: bold;
+}
+.google-btn {
+  border-radius: 40px;
+  color: black;
+  cursor: pointer;
+}
+.submit-btn {
+  width: 100%;
+  background-color: #005bffe6;
+  color: wheat;
+  padding: 10px;
+  border-radius: 20px;
+  border: none;
+  font-weight: bold;
+  margin-top: 20px;
+  cursor: pointer;
+
+}
+.submit-btn:focus {
+  outline: none;
+}
+#placeholder{
+  color: #a79d9d;
+}
+.seprate-login {
+  text-align: center;
+  max-width: 600px;
+  position: relative;
+  color: gray;
+  font-size: 11px;
+  margin-top: 16px;
+}
+
+.seprate-login:before {
+  content: "";
+  display: block;
+  width: 10vw;
+  height: 1px;
+  background: #b9b5b5;
+  left: 26px;
+  top: 50%;
+  position: absolute;
+}
+
+.seprate-login:after {
+  content: "";
+  display: block;
+  width: 10vw;
+  height: 1px;
+  background: #b9b5b5;
+  top: 50%;
+  position: absolute;
+  right: 26px;
+}
+
+.google-btn {
+  width: 100% !important;
+  border: 1px solid blue !important;
+  justify-content: center !important;
+  border-radius: 20px !important;
+  text-align: start;
+  padding: 7px!important;
+}
+.google-btn span{
+  padding: 0px 10px !important;
+}
+.log svg {
+  transform: scale(0.8) !important ;
+}
+.log button > div {
+  padding: 0px !important;
+}
+#form{
+  position: relative;
+  display: flex;
+  min-width: none;
+  width: 100%;
+  flex-direction: row;
+  transition: 2s;
+  /* overflow-x: scroll; */
+}
+.change{
+  padding: 10px!important;
+  font-weight: bold;
+  text-align: center;
+  color: blue;
+}
+#passbox,#emailbox{
+  /* position:absolute; */
+  min-width: 320px;
+}
+#passbox{
+  /* flex-direction: row-reverse; */ 
+  opacity: 0%;
+}
+.in{
+  /* flex-direction: row-reverse!important; */
+  animation: slidein .7s forwards;
+  
+}
+.out{
+  animation: slideout .5s forwards;
+
+}
+/* @keyframes slideout 
+  0%{
+    opacity: 100%;
+  }
+  100%{
+    opacity: 0%;
+} */
+/* @keyframes slidein {
+  
+  from{
+    opacity: 0%;
+    transform: translateX(0%);
+  }
+  to{
+    opacity: 100%;
+  }
+} */
+@keyframes slidein {
+  0%{
+    transform: translateX(0%);
+    opacity: 0%;
+  }
+  100%{
+    transform: translateX(-100%);
+    opacity: 100%;
+  }
+}
+@keyframes slideout {
+  0%{
+    transform: translateX(0%);
+    opacity: 3%;
+  }
+  35%{
+    opacity: 2%;
+  }
+  75%{
+    opacity: 1%;
+  }
+  100%{
+    transform: translateX(-100%);
+    opacity: 0%;
+  }
+}
+.disabled{
+  opacity: 60%;
+}
