@@ -6,6 +6,7 @@ import { loginReducer } from './loginReducer';
 import { cartReducer } from './passShowReducer';
 import { profileReducer } from './profileReducer';
 import { AttendanceReducer } from './AttendanceReducer';
+import { StopTimeReducer } from './StopTimerReducer';
 
 
 const reducers = combineReducers({
@@ -15,7 +16,8 @@ const reducers = combineReducers({
     loginReducer: loginReducer,
     cartReducer: cartReducer,
     profileReducer: profileReducer,
-    AttendanceReducer: AttendanceReducer
+    AttendanceReducer: AttendanceReducer,
+    StopTimerReducer: StopTimeReducer
 });
 
 export default reducers;

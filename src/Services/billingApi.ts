@@ -66,7 +66,7 @@ export const checkInUser = async (
 ) => {
   try {
     const response = await projectCheckIn({ project_id: product_id });
-    const result: CheckInResponse = await response.json();
+    const result: CheckInResponse = await response.json()
     if (result.success) {
       dispatch(allActions.projectCheckInAction(result));
     } else {

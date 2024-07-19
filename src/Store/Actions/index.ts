@@ -6,3 +6,4 @@ export * from "./passwordShow";
 export * from "./profileActions";
 export * from "./AttendanceAction"
 export * from "./ProjectCheckoutAction"
+export * from "./StopTimerAction"

@@ -1,23 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import './ProjectStatusDashboard.css';
 import { useSelector } from 'react-redux';
-import SecTopBar from './Navbar/SecTopBar';
-import ProjectTimer from '../Timer/ProjectTimer';
 import { useActions } from "../../Hooks/useAction";
 import CustomConfirmModal from './Modals/CustomConfirmModal';
-import CustomAlertModal from './Modals/CutomAlertModal';
 
 const ProjectStatusDashboard = ({ isDashboard }) => {
     const [projects, setProjects] = useState([]);
-    const [data, setData] = useState({})
     const [projectOptions, setProjectOptions] = useState([]);
     const [modal, setModal] = useState(false)
     const biddingData = useSelector((state: any) => state?.biddingReducer?.biddingdata?.biddingdata);
     const [error, setError] = useState('');
     const [totalHours, setTotalHours]: any = useState(0)
-    const { attendance, checkOut } = useActions()
+    const { attendance } = useActions()
     const attendanceMessage = useSelector((state: any) => state?.AttendanceReducer?.attendanceData?.attendance?.message)
-    const checkoutMessage = useSelector((state: any) => state)
+    const stopTimerData = useSelector((state: any) => state?.StopTimerReducer?.stopTimerData?.data)
     const [isConfirm, setIsConfirm] = useState(false)
     const [alertModal, setAlertModal] = useState(false)
     const [submitData, setSubmitData] = useState(null)
@@ -36,11 +32,16 @@ const ProjectStatusDashboard = ({ isDashboard }) => {
     }, [biddingData]);
 
     useEffect(() => {
+        console.log(biddingData, "helo")
+        setProjectOptions(biddingData?.myprojects)
+    },[])
+
+    useEffect(() => {
         updateTotalHours(projects);
     }, [projects]);
 
     const addNewProject = () => {
-        setProjects([...projects, { name: '', description: '', time: '' }]);
+        setProjects([...projects, { project_name: 'asdnjkasn', description: '', time: '' }]);
     };
 
     const handleDelete = (index: any) => {
@@ -60,7 +61,6 @@ const ProjectStatusDashboard = ({ isDashboard }) => {
         const updatedProjects = projects.map((project, i) =>
             i === index ? { ...project, [field]: value } : project
         );
-
         setProjects(updatedProjects);
     };
 
@@ -105,13 +105,15 @@ const ProjectStatusDashboard = ({ isDashboard }) => {
 
         const project_ids = projects.map((project => project.id.toString()));
         const project_description = projects.map(project => project.description);
-        const project_time = projects.map(project => formatMinutesToTime(parseTimeToMinutes(project.time)));
+        const project_time = projects.map(project => formatMinutesToTime(parseTimeToMinutes(project.time)) || null);
+        const connects_used = projects.map(project => project.connects || null);
 
         const submissionData = {
             data: {
                 project_ids,
                 project_description,
-                project_time
+                project_time,
+                connects_used
             }
         };
 
@@ -123,8 +125,9 @@ const ProjectStatusDashboard = ({ isDashboard }) => {
     return (
         <main className="mt-8 flex flex-col items-center">
             {/* Modal */}
-            {modal && <CustomConfirmModal message={attendanceMessage} setModal={setModal} setIsConfirm={setIsConfirm} setAlertModal={setAlertModal} submitData= {submitData}  />}
-            {alertModal && <CustomAlertModal message={"hey"} setAlertModal={setAlertModal} setIsConfirm={setIsConfirm} />}
+            {modal && <CustomConfirmModal message={attendanceMessage} setModal={setModal} setIsConfirm={setIsConfirm} setAlertModal={setAlertModal} submitData={submitData} isDashboard={isDashboard} />}
+            {/* {alertModal && <CustomAlertModal message={stopTimerData?.totaltime} setAlertModal={setAlertModal} setIsConfirm={setIsConfirm} />} */}
+
             {/* Project List Container  */}
             <section className="container">
                 <table className="project-table">
@@ -133,7 +136,9 @@ const ProjectStatusDashboard = ({ isDashboard }) => {
                     <tr className="project-header rounded-t-md">
                         <th>Project Name</th>
                         <th>Description</th>
-                        <th>Total Time</th>
+                        {!stopTimerData?.businee_department ?
+                            <th>Connects</th> :
+                            <th>Total Time</th>}
                         <th>Remove Project</th>
                     </tr>
 
@@ -142,18 +147,18 @@ const ProjectStatusDashboard = ({ isDashboard }) => {
                         <tr key={index} className="project-row">
                             {/* Project Name  */}
                             <td>
-                                {/* <select
-                                value={project.name}
-                                onChange={(e) => handleChange(index, 'name', e.target.value)}
-                            > */}
-                                {/* <option value="">-- Choose project --</option> */}
-                                {project?.project_name}
-                                {/* {projectOptions?.map(option => (
+                                <select
+                                    defaultValue={project.project_name}
+                                    onChange={(e) => handleChange(index, 'name', e.target.value)}
+                                >
+                                    <option value="">-- Choose project --</option>
+                                    {project?.project_name}
+                                {projectOptions?.map(option => (
                                     <option key={option.id} value={option.name}>
-                                        {option.name}
+                                        {option.project_name}
                                     </option>
-                                ))} */}
-                                {/* </select> */}
+                                ))}
+                                </select>
                             </td>
 
                             {/* Description  */}
@@ -165,16 +170,24 @@ const ProjectStatusDashboard = ({ isDashboard }) => {
                                 />
                             </td>
 
-                            {/* Total Time  */}
-                            <td>
-                                <input
-                                    type="text"
-                                    placeholder="Total time"
-                                    className="outline-none border px-3 py-1 rounded-full text-center"
-                                    defaultValue={project.total_time}
-                                    onChange={(e) => handleChange(index, 'time', e.target.value)}
-                                />
-                            </td>
+                            {stopTimerData?.businee_department ?
+                                <td>
+                                    <input
+                                        type="text"
+                                        placeholder="Total time"
+                                        className="outline-none border px-3 py-1 rounded-full text-center"
+                                        defaultValue={project.total_time}
+                                        onChange={(e) => handleChange(index, 'time', e.target.value)}
+                                    />
+                                </td>
+                                :
+                                <td>
+                                    <input
+                                        type="text"
+                                        placeholder="Connects"
+                                        className="outline-none border px-3 py-1 rounded-full text-center"
+                                    />
+                                </td>}
 
                             {/* Remove Project  */}
                             <td>

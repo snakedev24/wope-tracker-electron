@@ -39,3 +39,7 @@ export const attendanceStatus = (data) => {
 export const projectCheckOut = (data) => {
    return post("/checkout", data)
 }
+
+export const stopTimer = () => {
+   return get("/stoptimer")
+}

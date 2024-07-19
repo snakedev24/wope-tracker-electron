@@ -26,18 +26,11 @@ const ProjectDetails = () => {
   const billingData = useSelector((state: any) => state.projectbillingReducer) //billing api data
   const dev = useSelector((state: any) => state?.biddingReducer?.biddingdata?.biddingdata?.user_name)  //logged in user name
   const [isDashboard, setIsDashboard] = useState(false);
-  // const fetchUserProfile = () => {
-  //   getUserProfile(navigate);
-  // };
   const time = billingData.billingdata?.projects[0].total_time
 
   const navigate = useNavigate()
-  // useEffect(() => {
-  //   fetchUserProfile()
-  // },[]);
 
-  const setprojectid = (e) => {
-    // e.preventDefault()
+  const setprojectid = (e: any) => {
     const selInput = document.getElementById('projectid') as HTMLInputElement || null
     let selproject = selInput?.value;
     let proid = e.target.closest(".card").dataset.id;
@@ -57,11 +50,6 @@ const ProjectDetails = () => {
         let d = new Date(Date.now());
         let timeInputValue = timeinput?.value
         timeInputValue = d.toLocaleString();
-        // ipcRenderer.send("screenshot:capture", {});
-        // if (document.getElementById('service').value === 'true') {
-        //   ipcRenderer.send('stop', {});
-        // }
-        // settimer(false)
       }
     }
     document.getElementById('watch')?.classList.add('hide');

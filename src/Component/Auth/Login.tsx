@@ -20,7 +20,8 @@ const Login = () => {
   const [icon, seticon] = useState(<AiFillEye />);
   const [data, setdata] = useState(formData);
   const [backbtn, setbackbtn] = useState(false);
-
+  const [loading, isLoading] = useState(false);
+  const loginError = useSelector((state: any) => state?.loginReducer?.logindata?.logindata?.message)
   const { setpassword, login, authenticate } = useActions()
 
   const handleChange = (e: any) => {
@@ -56,22 +57,26 @@ const Login = () => {
   }
 
   //submit function
-  const handleSubmit = (e) => {
-    console.log(data, "asd")
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
+    isLoading(true);
     if (navigator.onLine) {
       let pattern = /^[^]+@[^]+\.[a-z]{2,3}$/;
       if (data.email === "") {
+        toast("Enter Email");
       } else if (!data.email.match(pattern)) {
         toast("Invalid email format.");
       } else if (data.email.match(pattern)) {
-        console.log(data, "datattaa")
-        login({ data, backbtn, authenticate, setbackbtn })
+        try {
+          await login({ data, backbtn, authenticate, setbackbtn });
+        } catch (error) {
+          toast("Error logging in.");
+          console.error(error);
+        }
       }
     }
-  }
-  // else window.alert('No internet')
-  // };
+    isLoading(false);
+  };  
 
   const token = localStorage.getItem('token');
 
@@ -92,6 +97,7 @@ const Login = () => {
         data={data}
         backbtn={backbtn}
         setbackbtn={setbackbtn}
+        loading={loading}
       />
     </>
   );

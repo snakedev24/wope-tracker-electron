@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import ProjectTimer from "../../Timer/ProjectTimer";
 import "../../Projects/dashboard/ProjectDashboardPage.css"
+import { useActions } from "../../../Hooks/useAction";
 
 interface SecTopBarProps {
   settimer: (value: boolean) => void;
@@ -14,7 +15,7 @@ interface SecTopBarProps {
 
 const SecTopBar: React.FC<SecTopBarProps> = ({ settimer, updateData, isDashboard, setIsDashboard, biddingData }) => {
   const [rotated, setRotated] = useState(false);
-
+  const { StopProjectTimer } = useActions()
   const handleSpinner = () => {
     setRotated(true);
     settimer(false);
@@ -24,8 +25,13 @@ const SecTopBar: React.FC<SecTopBarProps> = ({ settimer, updateData, isDashboard
     }, 3000);
   };
 
+  const handleStopWorking = () => {
+    StopProjectTimer()
+    setIsDashboard(true)
+  }
+
   const handleReload = (e: React.MouseEvent<HTMLButtonElement, MouseEvent> | undefined) => {
-    e?.preventDefault();
+    e.preventDefault();
     const selInput = document.getElementById("projectid") as HTMLInputElement | null
     let selproject = selInput?.value;
     if (!selproject) {
@@ -57,7 +63,7 @@ const SecTopBar: React.FC<SecTopBarProps> = ({ settimer, updateData, isDashboard
           )}
         </span>
         {biddingData?.formattedTime !== "0h 0m 0s" && (
-          <button onClick={() => setIsDashboard(true)} className="stop-working">
+          <button onClick={() => handleStopWorking()} className="stop-working">
             Stop Working
           </button>
         )}

@@ -11,20 +11,6 @@ import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Mail } from "lucide-react"
 
-// interface LoginFormProps {
-//   handelChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-//   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
-//   continuebtn: () => void;
-//   showPassword: () => void;
-//   icon: React.ReactNode;
-//   data: {
-//     username: string;
-//     password: string;
-//   };
-//   backbtn: () => void;
-//   setbackbtn: (flag: boolean) => void;
-// }
-
 const Loginform = (
   {
     handleChange,
@@ -34,7 +20,8 @@ const Loginform = (
     icon,
     data,
     backbtn,
-    setbackbtn
+    setbackbtn,
+    loading
   }
 ) => {
   const state = useSelector((state: any) => state);
@@ -70,8 +57,8 @@ const Loginform = (
             <Input
               className="input-design"
               // value={data.password}
-              type="text"
-              // type={state.cartReducer.password} // Assuming this is a boolean
+              // type="password"
+              type={state.cartReducer.password} // Assuming this is a boolean
               id="password"
               name="password"
               autoComplete="off"
@@ -80,24 +67,32 @@ const Loginform = (
               placeholder="Enter your Password"
             />
 
-            <span className="absolute right-4 bottom-[153px] text-xl text-blue-900">
+            <span onClick={showPassword} className="absolute right-4 bottom-[130px] text-xl text-blue-900">
               {icon}
             </span>
 
-            <div // onClick={showPassword} 
-            >
+            {/* <div>
               <NavLink to="https://snakescript.wope.ai/forget-password" className="text-xs flex justify-end mt-2 text-blue-700">
                 Forgot Password?
               </NavLink>
-            </div>
+            </div> */}
 
             <Button
               type="submit"
               onClick={handleSubmit}
-              className={
-                // !data.password ? "submit-btn disabled" : 
-                "submit-btn rounded-lg bg-blue-600 hover:bg-blue-700"}
-            >Submit</Button>
+              disabled={loading}
+              className={"submit-btn rounded-lg bg-blue-600 hover:bg-blue-700"}
+            >
+              {!loading ?
+                <span>
+                  Submit
+                </span>
+                :
+                <span>
+                  Submitting...
+                </span>
+              }
+            </Button>
 
             <Button
               type="button"

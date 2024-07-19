@@ -11,11 +11,15 @@ const ProjectDashboardPage = () => {
   const biddingData = useSelector(
     (state: any) => state.biddingReducer.biddingdata.biddingdata
   );
-
+  console.log(biddingData, "bidding:")
   const { checkInUser, checkProjectTime } = useActions();
   const [searchInput, setSearchInput] = useState("");
+  const [active , setActive] = useState()
   const dispatch = useDispatch();
+
   const handleProjectClick = async (projectId) => {
+    console.log("hello")
+
    await checkInUser(projectId, dispatch, toast);
   };
 

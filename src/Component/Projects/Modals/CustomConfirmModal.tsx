@@ -1,5 +1,5 @@
 import { useActions } from "../../../Hooks/useAction";
-const CustomConfirmModal = ({ message, setModal, setIsConfirm, setAlertModal, submitData }) => {
+const CustomConfirmModal = ({ message, setModal, setIsConfirm, setAlertModal, submitData, isDashboard }) => {
 
     const { checkOut } = useActions()
 
@@ -8,6 +8,7 @@ const CustomConfirmModal = ({ message, setModal, setIsConfirm, setAlertModal, su
         setIsConfirm(true)
         setAlertModal(true)
         checkOut(submitData)
+        isDashboard(false)
     }
 
     return (
