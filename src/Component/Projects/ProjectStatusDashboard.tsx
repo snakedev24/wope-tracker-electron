@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import './ProjectStatusDashboard.css';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useActions } from "../../Hooks/useAction";
 import CustomConfirmModal from './Modals/CustomConfirmModal';
+import { useNavigate } from 'react-router-dom';
 
 const ProjectStatusDashboard = ({ isDashboard }) => {
     const [projects, setProjects] = useState([]);
@@ -10,11 +11,14 @@ const ProjectStatusDashboard = ({ isDashboard }) => {
     const [modal, setModal] = useState(false)
     const biddingData = useSelector((state: any) => state?.biddingReducer?.biddingdata?.biddingdata);
     const [error, setError] = useState('');
+    const dispatch = useDispatch();
     const [totalHours, setTotalHours]: any = useState(0)
-    const { attendance } = useActions()
+    const { attendance, fetchData } = useActions()
     const attendanceMessage = useSelector((state: any) => state?.AttendanceReducer?.attendanceData?.attendance?.message)
     const stopTimerData = useSelector((state: any) => state?.StopTimerReducer?.stopTimerData?.data)
     const [isConfirm, setIsConfirm] = useState(false)
+    const [projectloader, setprojectloader] = useState(true)
+    const navigate = useNavigate()
     const [alertModal, setAlertModal] = useState(false)
     const [submitData, setSubmitData] = useState(null)
     useEffect(() => {
@@ -34,7 +38,7 @@ const ProjectStatusDashboard = ({ isDashboard }) => {
     useEffect(() => {
         console.log(biddingData, "helo")
         setProjectOptions(biddingData?.myprojects)
-    },[])
+    }, [])
 
     useEffect(() => {
         updateTotalHours(projects);
@@ -122,6 +126,11 @@ const ProjectStatusDashboard = ({ isDashboard }) => {
         setModal(true)
     };
 
+    const handleCancel = () => {
+        isDashboard(false)
+        dispatch(fetchData(navigate, setprojectloader));
+    }
+
     return (
         <main className="mt-8 flex flex-col items-center">
             {/* Modal */}
@@ -153,11 +162,11 @@ const ProjectStatusDashboard = ({ isDashboard }) => {
                                 >
                                     <option value="">-- Choose project --</option>
                                     {project?.project_name}
-                                {projectOptions?.map(option => (
-                                    <option key={option.id} value={option.name}>
-                                        {option.project_name}
-                                    </option>
-                                ))}
+                                    {projectOptions?.map(option => (
+                                        <option key={option.id} value={option.name}>
+                                            {option.project_name}
+                                        </option>
+                                    ))}
                                 </select>
                             </td>
 
@@ -208,7 +217,7 @@ const ProjectStatusDashboard = ({ isDashboard }) => {
             <div className="flex justify-between items-center mt-5">
                 <div className="font-lg">Total Hours: {totalHours}</div>
                 <div className='buttons flex gap-5'>
-                    <button type="button" onClick={() => { isDashboard(false) }}>Cancel</button>
+                    <button type="button" onClick={handleCancel}>Cancel</button>
                     <button type="submit" onClick={() => handleSubmit()}>Confirm</button>
                 </div>
             </div>

@@ -6,20 +6,21 @@ import ProjectDashboardList from "./ProjectDashboardList";
 import "./ProjectDashboardPage.css";
 import "react-toastify/dist/ReactToastify.css";
 import { Input } from "../../ui/input";
+import { useNavigate } from "react-router-dom";
 
 const ProjectDashboardPage = () => {
   const biddingData = useSelector(
     (state: any) => state.biddingReducer.biddingdata.biddingdata
   );
   console.log(biddingData, "bidding:")
-  const { checkInUser, checkProjectTime } = useActions();
+  const { checkInUser, fetchData } = useActions();
   const [searchInput, setSearchInput] = useState("");
   const [active , setActive] = useState()
+  const [projectloader, setprojectloader] = useState(true)
   const dispatch = useDispatch();
+  const navigate = useNavigate()
 
   const handleProjectClick = async (projectId) => {
-    console.log("hello")
-
    await checkInUser(projectId, dispatch, toast);
   };
 
@@ -41,11 +42,18 @@ const ProjectDashboardPage = () => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      dispatch(checkProjectTime(dispatch));
+      dispatch(fetchData(navigate, setprojectloader));
     }, 60000);
 
     return () => clearInterval(interval);
   }, [dispatch]);
+
+  useEffect(() => {
+    const handleSelectedProject = () => {
+      dispatch(fetchData(navigate, setprojectloader));
+    }
+    // handleSelectedProject()
+  },[])
 
   return (
     <section className="App">

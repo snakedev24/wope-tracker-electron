@@ -1,31 +1,31 @@
 import { get, post } from "./requests";
 
 export const bidding = () => {
-   return get("/home")
+   return get("/api/home")
 }
 
 export const billing = (proid) => {
-   return get(`/projectbill/${proid}`)
+   return get(`/api/projectbill/${proid}`)
 }
 
 export const loginAuth = () => {
-   return get("/profileapi")
+   return get("/api/profileapi")
 }
 
 export const userProfile = () => {
-   return get("/profileapi")
+   return get("/api/profileapi")
 }
 
 export const loginValid = (fdata) => {
-   return post("/login", fdata)
+   return post("/api/login", fdata)
 }
 
 export const logoutUser = () => {
-   return get("/logout")
+   return get("/api/logout")
 }
 
 export const projectCheckIn = (data) => {
-   return post("/toggle-project-timer", data)
+   return post("/api/toggle-project-timer", data)
 }
 
 export const projectTimer = () => {
@@ -33,13 +33,13 @@ export const projectTimer = () => {
 }
 
 export const attendanceStatus = (data) => {
-   return post("/checkAttenndance", data)
+   return post("/api/checkAttenndance", data)
 }
 
 export const projectCheckOut = (data) => {
-   return post("/checkout", data)
+   return post("/api/checkout", data)
 }
 
 export const stopTimer = () => {
-   return get("/stoptimer")
+   return get("/api/stoptimer")
 }

@@ -14,38 +14,12 @@ interface SecTopBarProps {
 }
 
 const SecTopBar: React.FC<SecTopBarProps> = ({ settimer, updateData, isDashboard, setIsDashboard, biddingData }) => {
-  const [rotated, setRotated] = useState(false);
   const { StopProjectTimer } = useActions()
-  const handleSpinner = () => {
-    setRotated(true);
-    settimer(false);
-    setTimeout(() => {
-      settimer(true);
-      setRotated(false);
-    }, 3000);
-  };
 
   const handleStopWorking = () => {
     StopProjectTimer()
     setIsDashboard(true)
   }
-
-  const handleReload = (e: React.MouseEvent<HTMLButtonElement, MouseEvent> | undefined) => {
-    e.preventDefault();
-    const selInput = document.getElementById("projectid") as HTMLInputElement | null
-    let selproject = selInput?.value;
-    if (!selproject) {
-      return;
-    }
-    const taskInput = document.getElementById("task") as HTMLInputElement | null;
-    const taskValue = taskInput?.value;
-    if (taskValue === '') {
-      window.alert('First start your timer');
-    } else {
-      handleSpinner();
-      updateData();
-    }
-  };
 
   return (
     <div className="tracking">
